@@ -1,4 +1,4 @@
-import {ALL_STATES, LOGIN_USER} from '../Action/types';
+import {ALL_STATES, LOGIN_USER} from '../action/types';
 
 const initialState = {
   user: [],

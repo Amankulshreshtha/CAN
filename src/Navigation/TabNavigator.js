@@ -14,7 +14,9 @@ const Tab = createBottomTabNavigator();
 const TabNavigator = () => {
   return (
     // <NavigationContainer>
-    <Tab.Navigator screenOptions={{tabBarShowLabel: false}}>
+    <Tab.Navigator
+      screenOptions={{tabBarShowLabel: false}}
+      initialRouteName="Home">
       <Tab.Screen
         name="CalendarScreen"
         component={CalendarScreen}
@@ -31,6 +33,7 @@ const TabNavigator = () => {
           tabBarIcon: () => <Image source={IMAGES.Forum} />,
         }}
       />
+
       <Tab.Screen
         name="Home"
         component={Home}

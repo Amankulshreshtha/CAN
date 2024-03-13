@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import {Dropdown} from 'react-native-element-dropdown';
 import {useDispatch, useSelector} from 'react-redux';
-import {registerUser, fetchStates} from '../../Redux/Action/Action';
+import {registerUser, fetchStates} from '../../redux/action/action';
 import CustomAlert from '../../components/CustomAlert/CustomAlert';
 import CustomButton from '@components/customeButton';
 import IMAGES from '@assets/Image';

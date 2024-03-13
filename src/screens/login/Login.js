@@ -3,7 +3,7 @@ import {Image, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
-import {loginUser} from '../../Redux/Action/Action';
+import {loginUser} from '../../redux/action/action';
 import CustomButton from '@components/customeButton';
 import IMAGES from '@assets/Image';
 import styles from './styles';

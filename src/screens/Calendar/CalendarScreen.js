@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Text,
   View,
@@ -12,45 +12,39 @@ import CustomDrawerHeader from '@components/Headers/Header';
 import {Calendar} from 'react-native-calendars';
 import styles from './styles';
 import IMAGES from '@assets/Image';
+import {CalendarData} from '../../redux/api/api';
 
 const CalendarScreen = () => {
   const [selectDate, setSelectDate] = useState(null);
+  const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const events = [
-    {
-      topic: 'Pitch Session 1: Jasper Infotech',
-      type: 'Pitch Session',
-      time: '4 PM',
-      location: 'Virtual',
-      agenda:
-        'Pitch Session for 3 startups: Jasper Infotech, My Home, XYZ housing',
-      Meeting: 'https://zoom.us/meeting_id/32432',
-      Document: 'PDF',
-    },
-    {
-      topic: 'Pitch Session 2: My Home',
-      type: 'Pitch Session',
-      time: '4 PM',
-      location: 'Virtual',
-      agenda:
-        'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-      Meeting: 'https://zoom.us/meeting_id/32432',
-      Document: 'PDF',
-    },
-    {
-      topic: 'Pitch Session 3: My Home',
-      type: 'Pitch Session',
-      time: '4 PM',
-      location: 'Virtual',
-      agenda: 'Pitch Session for My Home',
-      Meeting: 'https://zoom.us/meeting_id/32432',
-      Document: 'PDF',
-    },
-  ];
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const eventData = await CalendarData();
+        console.log(eventData);
+        setEvents(eventData.result);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching calendar data:', error);
+        setLoading(false);
+      }
+    }
+    fetchData();
+  }, []);
 
   const handleMeetingLinkPress = url => {
     Linking.openURL(url);
   };
+
+  if (loading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
 
   return (
     <SafeAreaView>
@@ -113,14 +107,15 @@ const CalendarScreen = () => {
                     flexDirection: 'row',
                     alignItems: 'center',
                     marginTop: 5,
-                    // backgroundColor: 'green',
                   }}>
                   <Text style={styles.subContainerMeetingText}>
                     Meeting URL:
                   </Text>
                   <TouchableOpacity
-                    onPress={() => handleMeetingLinkPress(item.Meeting)}>
-                    <Text style={styles.subContainerUrl}> {item.Meeting}</Text>
+                    onPress={() => handleMeetingLinkPress(item.meeting_url)}>
+                    <Text style={styles.subContainerUrl}>
+                      {item.meeting_url}
+                    </Text>
                   </TouchableOpacity>
                 </View>
                 <Text style={styles.pdfTxt}>Pitch Deck: {item.Document}</Text>

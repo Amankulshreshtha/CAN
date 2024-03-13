@@ -1,9 +1,6 @@
-import axios from 'axios';
-import {LOGIN_USER, ALL_STATES} from './types';
-import {} from './types';
 import {Alert} from 'react-native';
-
-const BASE_URL = 'http://54.190.192.105:9185/angel';
+import {LOGIN_USER, ALL_STATES} from './types';
+import {registerUserAPI, loginUserAPI, fetchStatesAPI} from '../api/api';
 
 export const registerUser = params => {
   console.log('Name:', params.name);
@@ -15,9 +12,9 @@ export const registerUser = params => {
 
   return async dispatch => {
     try {
-      const response = await axios.post(`${BASE_URL}/register`, params);
-      console.log('Response from API:', response.data);
-      if (response.data.email == params.email) {
+      const response = await registerUserAPI(params);
+      console.log('Response from API:', response);
+      if (response.email == params.email) {
         Alert.alert('Error', 'Email is already registered.');
       } else {
         // Proceed with other actions if needed
@@ -28,30 +25,30 @@ export const registerUser = params => {
     }
   };
 };
+
 export const loginUser = (params, navigation) => {
   console.log('Email:', params.email);
   console.log('Password:', params.password);
 
   return async dispatch => {
     try {
-      const response = await axios.post(`${BASE_URL}/login`, params);
-      console.log('Response from API:', response.data);
-      console.log('API Email', response.data.result.email);
+      const response = await loginUserAPI(params);
+      console.log('Response from API:', response);
+      console.log('API Email', response.result);
       console.log('Local Email', params.email);
+      console.log('token only =', response.Token);
 
-      if (response.data.result.email === params.email) {
+      if (response.result.email === params.email) {
         dispatch({
           type: LOGIN_USER,
-          payload: response.data.result,
+          payload: response,
         });
         navigation.navigate('Home');
       } else {
         Alert.alert('invalid Email or password');
       }
     } catch (error) {
-      // console.error('Error logging in user:', error);
       Alert.alert('invalid Email or password');
-      // throw error;
     }
   };
 };
@@ -59,10 +56,10 @@ export const loginUser = (params, navigation) => {
 export const fetchStates = () => {
   return async dispatch => {
     try {
-      const response = await axios.get(`${BASE_URL}/get_all_state`);
+      const response = await fetchStatesAPI();
       dispatch({
         type: ALL_STATES,
-        payload: response.data.result,
+        payload: response.result,
       });
     } catch (error) {
       console.error('Error fetching states:', error);

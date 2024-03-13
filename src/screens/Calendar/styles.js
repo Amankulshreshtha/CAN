@@ -79,6 +79,8 @@ export default styles = StyleSheet.create({
     fontSize: moderateScale(14),
     color: 'rgba(0, 10, 255, 0.66)',
     fontFamily: 'Nunito-Regular',
+    // backgroundColor: 'red',
+    marginLeft: moderateScale(10),
   },
 
   selectDateText: {

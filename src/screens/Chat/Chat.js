@@ -1,80 +1,70 @@
 import React, {useState} from 'react';
-import styles from './styles';
-import {
-  View,
-  FlatList,
-  TextInput,
-  TouchableOpacity,
-  Text,
-  Image,
-} from 'react-native';
+import {View, Image} from 'react-native';
+import {GiftedChat} from 'react-native-gifted-chat';
 import Header from '@components/Headers/Header';
-
 import IMAGES from '@assets/Image';
 
 const Chat = () => {
-  const [newMessage, setNewMessage] = useState('');
   const [messages, setMessages] = useState([
-    {id: 1, sender: 'Aman', message: 'sanjay!', timestamp: '10:00 PM'},
-    {id: 2, sender: 'sanjay', message: 'Aman!', timestamp: '10:00 PM'},
+    {
+      _id: 1,
+      text: 'Aman!',
+      createdAt: new Date(),
+      user: {_id: 1, name: 'Aman'},
+      quickReplies: {
+        type: 'radio',
+        keepIt: true,
+        values: [
+          {
+            title: ' Yes',
+            value: 'yes',
+          },
+          {
+            title: ' Yes, let me show you with a picture!',
+            value: 'yes_picture',
+          },
+          {
+            title: ' Nope. What?',
+            value: 'no',
+          },
+        ],
+      },
+      image: IMAGES.Chat,
+    },
+    {
+      _id: 2,
+      text: 'Sanjay!',
+      createdAt: new Date(),
+      user: {_id: 2, name: 'sanjay'},
+    },
   ]);
 
-  const handleSendMessage = () => {
-    if (newMessage.trim() === '') return;
-    const newId = messages.length + 1;
-    const timestamp = new Date().toLocaleTimeString([], {
-      hour: '2-digit',
-      minute: '2-digit',
-    });
-    const newMessageObj = {
-      id: newId,
-      sender: 'Me',
-      message: newMessage,
-      timestamp,
-    };
-    setMessages([...messages, newMessageObj]);
-    setNewMessage('');
-  };
-
-  const renderMessages = ({item}) => {
-    const myMsg = item.sender === 'Me';
-    return (
-      <View style={[myMsg ? styles.myMsgContainer : styles.otherMsgContainer]}>
-        <View
-          style={[myMsg ? styles.myTxtContainer : styles.otherTxtContainer]}>
-          <Text style={styles.message}>{item.message}</Text>
-        </View>
-        <Text style={styles.timestamp}>{item.timestamp}</Text>
-      </View>
+  const onSend = newMessages => {
+    setMessages(previousMessages =>
+      GiftedChat.append(previousMessages, newMessages),
     );
   };
 
   return (
-    <View style={styles.mainContainer}>
+    <View style={{flex: 1}}>
       <Header renderText="(CAN Admin)" showImage={false} />
-
-      <View style={styles.subContainer}>
-        <FlatList
-          data={messages}
-          renderItem={renderMessages}
-          keyExtractor={item => item.id}
-          contentContainerStyle={styles.chatContainer}
-        />
-
-        <View style={styles.inputContainer}>
-          <TextInput
-            multiline
-            value={newMessage}
-            style={styles.txtInput}
-            onChangeText={setNewMessage}
-            placeholder="Type your message"
+      <GiftedChat
+        messages={messages}
+        onSend={newMessages => onSend(newMessages)}
+        alwaysShowSend={true}
+        user={{_id: 1}}
+        isTyping={true}
+        // renderAvatarOnTop={true}
+        // isCustomViewBottom={true}
+        // multiline={true}
+        infiniteScroll={true}
+        renderMessageImage={props => (
+          <Image
+            source={props.currentMessage.image}
+            style={{width: 200, height: 200}}
           />
-
-          <TouchableOpacity style={styles.sendBtn} onPress={handleSendMessage}>
-            <Image source={IMAGES.upload} />
-          </TouchableOpacity>
-        </View>
-      </View>
+        )}
+      />
     </View>
   );
 };
