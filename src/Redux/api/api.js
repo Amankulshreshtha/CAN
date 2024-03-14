@@ -15,7 +15,7 @@ export const registerUserAPI = async params => {
 export const loginUserAPI = async params => {
   try {
     const response = await axios.post(`${BASE_URL}/login`, params);
-    console.log('hellooo aman your token is here', response.data.Token);
+    // console.log('hellooo aman your token is here', response.data.Token);
     Authorization_Key = response.data.Token;
     return response.data;
   } catch (error) {
@@ -40,7 +40,7 @@ export const CalendarData = async () => {
         Authorization: Authorization_Key,
       },
     });
-    console.log(response);
+    // console.log(response);
     return response.data;
   } catch (error) {
     throw error;

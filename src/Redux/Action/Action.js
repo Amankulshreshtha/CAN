@@ -33,10 +33,10 @@ export const loginUser = (params, navigation) => {
   return async dispatch => {
     try {
       const response = await loginUserAPI(params);
-      console.log('Response from API:', response);
-      console.log('API Email', response.result);
-      console.log('Local Email', params.email);
-      console.log('token only =', response.Token);
+      // console.log('Response from API:', response);
+      // console.log('API Email', response.result);
+      // console.log('Local Email', params.email);
+      // console.log('token only =', response.Token);
 
       if (response.result.email === params.email) {
         dispatch({

@@ -25,6 +25,8 @@ const IMAGES = {
   Slider3: require('./m3.png'),
   SliderLogo: require('./sliderLogo.png'),
   rightArrow: require('./rightArrow.png'),
+  doc: require('./doc.png'),
+  pdf: require('./pdf.png'),
 };
 
 export default IMAGES;

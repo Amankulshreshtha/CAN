@@ -1,5 +1,6 @@
 import {StyleSheet} from 'react-native';
 import {moderateScale, verticalScale} from '@Utills/Metrics';
+import {horizontalScale} from '../../Utills/Metrics';
 
 export default styles = StyleSheet.create({
   mainContainer: {
@@ -63,12 +64,25 @@ export default styles = StyleSheet.create({
   },
 
   subContainerAgenda: {
+    flex: moderateScale(1.5),
     fontSize: moderateScale(14),
-    marginTop: moderateScale(5),
+    margin: moderateScale(5),
     color: 'rgba(0,0,0,0.66)',
     fontFamily: 'Nunito-Regular',
   },
 
+  discriptionText: {
+    marginTop: moderateScale(5),
+    fontFamily: 'Nunito-Medium',
+    color: 'rgba(0, 0, 0, 1)',
+  },
+  docContainer: {
+    flexDirection: 'row',
+    marginLeft: horizontalScale(15),
+  },
+  maindocContainer: {
+    flexDirection: 'row',
+  },
   subContainerMeetingText: {
     fontSize: moderateScale(14),
     color: 'rgba(0, 0, 0, 1)',
@@ -76,11 +90,12 @@ export default styles = StyleSheet.create({
   },
 
   subContainerUrl: {
-    fontSize: moderateScale(14),
+    fontSize: moderateScale(16),
     color: 'rgba(0, 10, 255, 0.66)',
     fontFamily: 'Nunito-Regular',
     // backgroundColor: 'red',
-    marginLeft: moderateScale(10),
+    marginLeft: moderateScale(15),
+    marginBottom: moderateScale(5),
   },
 
   selectDateText: {
@@ -90,8 +105,9 @@ export default styles = StyleSheet.create({
   },
 
   pdfTxt: {
+    flex: moderateScale(1),
     fontSize: moderateScale(14),
-    marginTop: 10,
+    marginTop: moderateScale(5),
     marginBottom: 10,
     fontFamily: 'Nunito-Medium',
   },
