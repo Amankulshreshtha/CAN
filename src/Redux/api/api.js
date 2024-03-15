@@ -46,3 +46,37 @@ export const CalendarData = async () => {
     throw error;
   }
 };
+
+export const FormuData = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/get_all_forum_Category`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: Authorization_Key,
+      },
+    });
+    console.log(response);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const PortfolioData = async () => {
+  console.log(Authorization_Key);
+  try {
+    const response = await axios.get(
+      'http://54.190.192.105:9185/angel/get_all_portfolio',
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: Authorization_Key,
+        },
+      },
+    );
+    console.log(response, 'response helloooo');
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};

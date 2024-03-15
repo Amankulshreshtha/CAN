@@ -1,42 +1,36 @@
+import React, {useState, useEffect} from 'react';
 import {FlatList, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
-import React from 'react';
-import styles from './styles';
 import Header from '@components/Headers/Header';
+import {FormuData} from '../../redux/api/api';
+import styles from './styles';
 
 const Forum = ({navigation}) => {
-  const handlequs = () => {
+  const [forumData, setForumData] = useState([]);
+
+  useEffect(() => {
+    async function fetchForumData() {
+      try {
+        const data = await FormuData();
+        console.log('hellooo', data);
+        setForumData(data.result);
+      } catch (error) {
+        console.error('Error fetching forum data:', error);
+      }
+    }
+    fetchForumData();
+    return () => {};
+  }, []);
+
+  const handleQus = () => {
     navigation.navigate('Valuation');
     console.log('helloo');
   };
 
-  const forumData = [
-    {
-      title: 'General Guideline',
-      text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-    },
-    {
-      title: 'Pitch Session',
-      text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-    },
-    {
-      title: 'Valuations & MRR',
-      text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-    },
-    {
-      title: 'General Guideline',
-      text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-    },
-    {
-      title: 'Pitch Session',
-      text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-    },
-  ];
-
   const renderForumData = ({item}) => (
     <View style={styles.dataContainer}>
-      <TouchableOpacity onPress={handlequs}>
-        <Text style={styles.title}>{item.title}</Text>
-        <Text style={styles.text}>{item.text}</Text>
+      <TouchableOpacity onPress={handleQus}>
+        <Text style={styles.title}>{item.category_name}</Text>
+        <Text style={styles.text}>{item.description}</Text>
       </TouchableOpacity>
     </View>
   );

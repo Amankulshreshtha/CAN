@@ -1,40 +1,25 @@
 import {View, Text, FlatList, Image} from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Header from '@components/Headers/Header';
-
 import styles from './styles';
 import IMAGES from '@assets/Image';
+import {PortfolioData} from '../../redux/api/api';
 
 export default function Portfolio() {
-  const data = [
-    {
-      name: 'Jerry Infotech',
-      text: 'On demand food delivery startup',
-      amount: 'INR 3.50 lakhs',
-      shares: 1.345,
-      valuation: 'INR 3.5 Cr',
-      roundSize: 'INR 50 lakhs',
-      investment: '12/10/22',
-    },
-    {
-      name: 'XYC Inc',
-      text: 'Authentic Indian Tea',
-      amount: 'INR 3.50 lakhs',
-      shares: 1.279,
-      valuation: 'INR 3.5 Cr',
-      roundSize: 'INR 20 lakhs',
-      investment: '12/10/22',
-    },
-    {
-      name: 'ABC Inc',
-      text: 'Robotics, drones',
-      amount: 'INR 4.50 lakhs',
-      shares: 435,
-      valuation: 'INR 5 Cr',
-      roundSize: 'INR 50 lakhs',
-      investment: '12/10/22',
-    },
-  ];
+  const [portfolioData, setPortfolioData] = useState([]);
+
+  useEffect(() => {
+    const fetchPortfolioData = async () => {
+      try {
+        const response = await PortfolioData();
+        // console.log('Portfolio data:', response.data.result);
+        setPortfolioData(response.result);
+      } catch (error) {
+        console.error('Error fetching portfolio data:', error);
+      }
+    };
+    fetchPortfolioData();
+  }, []);
 
   const renderItem = ({item}) => (
     <View style={styles.itemData}>
@@ -52,7 +37,7 @@ export default function Portfolio() {
           marginTop: 10,
         }}>
         <Text style={styles.details}>
-          <Text style={styles.txt}>Amount:</Text> {item.amount}
+          <Text style={styles.txt}>Amount:</Text> {item.total_amount}
         </Text>
         <Text style={styles.details}>
           <Text style={styles.txt}># of shares:</Text> {item.shares}
@@ -86,13 +71,11 @@ export default function Portfolio() {
       <View style={styles.subContainer}>
         <Text style={styles.heading}>My Portfolio</Text>
 
-        <View>
-          <FlatList
-            data={data}
-            renderItem={renderItem}
-            keyExtractor={(item, index) => index.toString()}
-          />
-        </View>
+        <FlatList
+          data={portfolioData}
+          renderItem={renderItem}
+          keyExtractor={(item, index) => index.toString()}
+        />
       </View>
     </View>
   );

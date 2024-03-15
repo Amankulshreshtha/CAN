@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Image, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Formik} from 'formik';
@@ -10,8 +10,9 @@ import styles from './styles';
 
 const Login = ({navigation}) => {
   const dispatch = useDispatch();
+  const [passVisible, setPassVisible] = useState(false);
   const user = useSelector(state => state.auth.user);
-  console.log(user);
+  // console.log(user);
   const email = user ? user.email : '';
   const password = user ? user.password : '';
 
@@ -56,13 +57,16 @@ const Login = ({navigation}) => {
               <Text style={styles.txtInputHeading}>Password</Text>
               <View style={styles.inputTxt}>
                 <TextInput
+                  style={{width: '90%'}}
                   placeholder="Enter Password"
                   onChangeText={handleChange('password')}
                   onBlur={handleBlur('password')}
                   value={values.password}
-                  secureTextEntry
+                  secureTextEntry={passVisible}
                 />
-                <Image source={IMAGES.eye} style={styles.eyeIcon} />
+                <TouchableOpacity onPress={() => setPassVisible(!passVisible)}>
+                  <Image source={IMAGES.eye} style={styles.eyeIcon} />
+                </TouchableOpacity>
               </View>
               {touched.password && errors.password && (
                 <Text style={styles.errorText}>{errors.password}</Text>

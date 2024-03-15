@@ -20,6 +20,7 @@ import {validationSchema} from '../../components/yup/validationSchemas';
 
 export default function Register({navigation}) {
   const [showAlert, setShowAlert] = useState(false);
+  const [showPass, setShowPass] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -91,12 +92,14 @@ export default function Register({navigation}) {
               <View style={styles.eyeView}>
                 <TextInput
                   placeholder="Enter your Password"
-                  secureTextEntry={true}
+                  secureTextEntry={!showPass}
                   onChangeText={handleChange('password')}
                   onBlur={handleBlur('password')}
                   value={values.password}
                 />
-                <Image source={IMAGES.eye} />
+                <TouchableOpacity onPress={() => setShowPass(!showPass)}>
+                  <Image source={IMAGES.eye} />
+                </TouchableOpacity>
               </View>
               {touched.password && errors.password && (
                 <Text style={styles.errorText}>{errors.password}</Text>

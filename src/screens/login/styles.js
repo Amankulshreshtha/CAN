@@ -68,7 +68,9 @@ export default StyleSheet.create({
     borderColor: '#0A49755E',
   },
 
-  eyeIcon: {},
+  eyeIcon: {
+    marginRight: moderateScale(8),
+  },
 
   btnView: {
     flexDirection: 'row',

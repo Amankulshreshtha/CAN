@@ -82,6 +82,7 @@ export default styles = StyleSheet.create({
   },
   maindocContainer: {
     flexDirection: 'row',
+    marginBottom: moderateScale(5),
   },
   subContainerMeetingText: {
     fontSize: moderateScale(14),
@@ -93,7 +94,8 @@ export default styles = StyleSheet.create({
     fontSize: moderateScale(16),
     color: 'rgba(0, 10, 255, 0.66)',
     fontFamily: 'Nunito-Regular',
-    // backgroundColor: 'red',
+    // backgroundColor: 'yellow',
+    textDecorationLine: 'underline',
     marginLeft: moderateScale(15),
     marginBottom: moderateScale(5),
   },
